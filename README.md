@@ -8,12 +8,6 @@
 <a name="headers"/>
 ## Function
 
-<details>
-<summary>
-Read function details
-</summary>
-<p>
-
 Small
 > The first rule of functions is that they should be small. The second rule of functions is that they should be smaller than that.
 > Very small functions are better.
@@ -142,22 +136,7 @@ The above code is need to separate the command from the query.
        
  ### Don't Repeat Yourself
  > Avoid duplicate code for doing onething with many condition
- 
-</p>
-</details>
 
 .....  
 <a name="comment"/>
 ## Comments
-
-<details><summary>Read Comments details</summary>
-<p>
-
-#### We can hide anything, even code!
-
-```ruby
-   puts "Hello World"
-```
-
-</p>
-</details>
