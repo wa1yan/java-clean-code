@@ -45,14 +45,44 @@ Functions Arguments
 
 ### Flag argument
 > Flag arguments are ugly. Passing a boolean into a function is a truly terrible practice.
- 
-       deleteFile(true);
-       deleteFile(boolean isDelete);
+       
+       Bad:  
+       
+       fileExistAfterDeleted("C://Folder", "test.pdf", true); // we don't know 'true' is what
+       
+       public boolean fileExistAfterDeleted(String folderPath, String fileName, boolean isDelete) {
+		
+		File file = Paths.get(folderPath, fileName).toFile();	
+		if(isDelete) {
+			if(file.delete()) {
+				return false; // since file is not exist
+			}
+		}
+		return file.exists();
+	}
+	
+	Refactor: 
+	
+	fileExistAfterDeleted("C://Folder", "test.pdf");
+	
+	public boolean fileExistAfterDeleted(String folderPath, String fileName) {
+		return fileExistAfterDeleted(folderPath, fileName, true);
+	}
+	
+       	private boolean fileExistAfterDeleted(String folderPath, String fileName, boolean isDelete) { //private method
+		
+		File file = Paths.get(folderPath, fileName).toFile();	
+		if(isDelete) {
+			if(file.delete()) {
+				return false; // since file is not exist
+			}
+		}
+		return file.exists();
+	}
       
 ### Two Arguements 
 > Two argument is hardly to understand than one but we will certainly have to write them.
 
-       deleteFile(File file, isDelete); //if isDelete is true, file will be delete otherwise transfer to another path for backup.
 
 ### Three Arguments
 > Three arguments are significantly harder to understand than two. Very careful to create with three arguments.
@@ -66,11 +96,11 @@ Functions Arguments
 ### Verb and Keywords
  Choose good names for a function with verb/noun pair.
 
-> delete(File file, boolean isDelete) //static method
+> boolean delete(File file)
 
-> deleteFile(File file, boolean isDelete)
+> boolean isSuccessDelete(File file)
 
-deletFile(..) is more suitable than delete(..)
+isSuccessDelete(..) is more suitable than delete(..)
 
 ### Have No Side Effects
 The following code has side effect in isExistFile method. This side effect create a temporary coupling with isExistFile method so we should make it clear in the name of the function `checkPdfFile(String folderPath, String fileName)` to  `checkPdfFileAndExist(String folderPath, String fileName)`.
