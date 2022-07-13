@@ -4,6 +4,7 @@
 ## Table of Contents  
   [Function](#headers)  
   [Comments](#comment)  
+  [Object And DataStructure](#obj&DS)
 .   
 <a name="headers"/>
 ## Function
@@ -170,3 +171,76 @@ The above code is need to separate the command from the query.
 .....  
 <a name="comment"/>
 ## Comments
+
+.....
+<a name="obj&DS"/>
+## Object And Data Structure
+> Objects expose behavior and hide data. This makes it easy to add new kinds of objects without changing existing behaviors
+### The Law of Demeter (Principle of least knowledge)
+
+According to the Law of Demeter, a method M of object O should only call the following types of methods:
+Methods of Object O itself
+Methods of Object passed as an argument
+Method of an object, which is held in an instance variable
+Any Object which is created locally in method M
+
+>  A.getObjectB().getObjectC().display() // this is a violation of Law of Demeter.
+
+### Train Wrecks
+
+> Options opts = ctxt.getOptions();
+> File scratchDir = opts.getScratchDir();
+> final String outputDir = scratchDir.getAbsolutePath();
+
+If options and scratchDir are just data structure with no behaviour so this is not apply demeter.
+
+> final String outputDir = ctxt.options.scratchDir.absolutePath;
+
+### Method Hiding And Method Overriding
+
+> static method cann't override.
+
+
+		public class Parent {
+
+			public static void method1() { //static method coz of method hiding
+				System.out.println("Method 1 of the Parent class is executed.");
+			}
+
+			public void method2() {
+				System.out.println("Method 2 of the Parent class is executed.");
+			}
+		}
+		public class Child extends Parent {
+
+			public static void method1() { //method hiding with same signature
+				System.out.println("Method-1 of the Child class is executed.");
+			}
+
+			public void method2() {
+				System.out.println("Method-2 of the Child class is executed.");
+			}
+
+			public static void main(String args[]) {
+				Parent parent1 = new Parent();
+				Parent parent2 = new Child();
+
+				parent1.method1();
+
+				// parent2 is calling child's method1 but will do parent's method1 coz of method hiding
+				parent2.method1(); 
+
+				parent1.method2();
+				parent2.method2();
+
+				new Child().method1();
+			}
+		}
+
+### Hiding Structure
+
+### Data Transfer Object And Active Record
+
+> we should use dto or record class to seperate sample POJO class and business object class.
+
+
