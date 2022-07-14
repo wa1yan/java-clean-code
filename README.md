@@ -5,6 +5,7 @@
   [Function](#headers)  
   [Comments](#comment)  
   [Object And DataStructure](#obj&DS)
+  [Excetpions](#exceptions)
 .   
 <a name="headers"/>
 ## Function
@@ -242,5 +243,47 @@ If options and scratchDir are just data structure with no behaviour so this is n
 ### Data Transfer Object And Active Record
 
 > we should use dto or record class to seperate sample POJO class and business object class.
+
+
+<a name="exceptions"/>
+## Error Handling
+
+### Use excetpions rather than return codes
+
+> public class DeviceController {
+ ...
+ public void sendShutDown() {
+ DeviceHandle handle = getHandle(DEV1);
+ // Check the state of the device
+ if (handle != DeviceHandle.INVALID) {
+ // Save the device status to the record field
+ retrieveDeviceRecord(handle);
+ // If not suspended, shut down
+ if (record.getStatus() != DEVICE_SUSPENDED) {
+ pauseDevice(handle);
+ clearDeviceWorkQueue(handle);
+ closeDevice(handle);
+ } else {
+ logger.log("Device suspended. Unable to shut down");
+ }
+ } else {
+ logger.log("Invalid handle for: " + DEV1.toString());
+ }
+ }
+ ...
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
